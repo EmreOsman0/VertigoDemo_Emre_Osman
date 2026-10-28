@@ -116,12 +116,12 @@ TextureImporter:
       name: ui_card_icon_death_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 512
+        x: 129
+        y: 86
+        width: 267
+        height: 345
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d2e3cc4d238fd9f4f95da0f24ebd9e6a
     internalID: 0
     vertices: []
     indices: 

@@ -11,5 +11,6 @@ public class WheelSliceView : MonoBehaviour
     {
         icon.sprite = slice.reward.Icon;
         amountText.text = "x" + slice.amount;
+        amountText.gameObject.SetActive(!slice.reward.IsBomb);
     }
 }
