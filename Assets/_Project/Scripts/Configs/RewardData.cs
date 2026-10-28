@@ -7,7 +7,7 @@ public class RewardData : ScriptableObject
     [SerializeField] private Sprite icon;
     [SerializeField] private bool isBomb;
 
-    public string RewardName => rewardName;
-    public Sprite Icon => icon;
-    public bool IsBomb => isBomb;
+    public string RewardName { get { return rewardName; } }
+    public Sprite Icon { get { return icon; } }
+    public bool IsBomb { get { return isBomb; } }
 }

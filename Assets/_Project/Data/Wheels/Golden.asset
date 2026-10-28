@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6397e4462a3464eb3820bae231550c, type: 3}
+  m_Name: Golden
+  m_EditorClassIdentifier: 
+  wheelSprite: {fileID: 5770997025872212153, guid: 11df5a93baad92e46b74f91fb47bce37, type: 3}
+  slices:
+  - label: Slice 1
+    reward: {fileID: 11400000, guid: c2baba5c79bf2584dbe8d742f91d90a4, type: 2}
+    amount: 1000
+  - label: Slice 2
+    reward: {fileID: 11400000, guid: 42d498240911d72459df82f5f9ad0d42, type: 2}
+    amount: 50
+  - label: Slice 3
+    reward: {fileID: 11400000, guid: f005c2129eacf2a48b9b3462cb54493c, type: 2}
+    amount: 1
+  - label: Slice 4
+    reward: {fileID: 11400000, guid: 1e3e8ab7bfc3f474d856b7c689bcc095, type: 2}
+    amount: 1
+  - label: Slice 5
+    reward: {fileID: 11400000, guid: b34c652624b2edc49bda77e87f14897a, type: 2}
+    amount: 1
+  - label: Slice 6
+    reward: {fileID: 11400000, guid: 8a45240b715a6f14bb0062117d29bbd8, type: 2}
+    amount: 1
+  - label: Slice 7
+    reward: {fileID: 11400000, guid: 5656a207ce05d3b429d3b2a4d8697e92, type: 2}
+    amount: 1
+  - label: Slice 8
+    reward: {fileID: 11400000, guid: 918c68ddc6ef43b45bdb944c756cac76, type: 2}
+    amount: 1
