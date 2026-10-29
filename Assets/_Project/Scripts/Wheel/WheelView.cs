@@ -52,9 +52,28 @@ public class WheelView : MonoBehaviour
     public void Spin(System.Action<WheelSlice> onComplete)
     {
         if (isSpinning) return;
-        isSpinning = true;
 
         int index = Random.Range(0, currentConfig.Slices.Count);
+        SpinToIndex(index, onComplete);
+    }
+
+#if UNITY_EDITOR
+    public void DebugSpinToSlice(int index, System.Action<WheelSlice> onComplete)
+    {
+        if (index < 0 || index >= currentConfig.Slices.Count)
+            return;
+
+        if (isSpinning)
+            return;
+
+        SpinToIndex(index, onComplete);
+    }
+#endif
+
+    private void SpinToIndex(int index, System.Action<WheelSlice> onComplete)
+    {
+        isSpinning = true;
+
         float step = 360f / currentConfig.Slices.Count;
         int extraRounds = Random.Range(0, maxExtraRounds + 1);
         float targetAngle = (spinRounds + extraRounds) * 360f + index * step;

@@ -18,5 +18,8 @@ public class GameControllerEditor : Editor
 
         if (GUILayout.Button("Go To Zone"))
             ((GameController)target).DebugSetZone(zone);
+
+        if (GUILayout.Button("Spin To Bomb"))
+            ((GameController)target).DebugSpinToBomb();
     }
 }

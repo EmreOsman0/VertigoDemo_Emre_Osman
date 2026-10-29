@@ -9,8 +9,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private Button spinButton;
     [SerializeField] private Button leaveButton;
     [SerializeField] private TextMeshProUGUI zoneText;
+    [SerializeField] private RewardsView rewardsView;
     [SerializeField] private GameObject bombPopup;
     [SerializeField] private Button restartButton;
+    [SerializeField] private Button quitButton;
     [SerializeField] private WheelConfig bronzeConfig;
     [SerializeField] private WheelConfig silverConfig;
     [SerializeField] private WheelConfig goldenConfig;
@@ -32,6 +34,10 @@ public class GameController : MonoBehaviour
         if (zoneTextTransform != null)
             zoneText = zoneTextTransform.GetComponent<TextMeshProUGUI>();
 
+        Transform rewardsViewTransform = transform.Find("ui_rewards");
+        if (rewardsViewTransform != null)
+            rewardsView = rewardsViewTransform.GetComponent<RewardsView>();
+
         Transform bombPopupTransform = transform.Find("ui_popups/ui_popup_bomb");
         if (bombPopupTransform != null)
             bombPopup = bombPopupTransform.gameObject;
@@ -39,6 +45,10 @@ public class GameController : MonoBehaviour
         Transform restartButtonTransform = transform.Find("ui_popups/ui_popup_bomb/ui_button_popup_bomb_restart");
         if (restartButtonTransform != null)
             restartButton = restartButtonTransform.GetComponent<Button>();
+
+        Transform quitButtonTransform = transform.Find("ui_popups/ui_popup_bomb/ui_button_popup_bomb_quit");
+        if (quitButtonTransform != null)
+            quitButton = quitButtonTransform.GetComponent<Button>();
     }
 #endif
 
@@ -47,6 +57,7 @@ public class GameController : MonoBehaviour
         spinButton.onClick.AddListener(OnSpinClicked);
         leaveButton.onClick.AddListener(OnLeaveClicked);
         restartButton.onClick.AddListener(OnRestartClicked);
+        quitButton.onClick.AddListener(OnQuitClicked);
     }
 
     private void OnDisable()
@@ -54,6 +65,7 @@ public class GameController : MonoBehaviour
         spinButton.onClick.RemoveListener(OnSpinClicked);
         leaveButton.onClick.RemoveListener(OnLeaveClicked);
         restartButton.onClick.RemoveListener(OnRestartClicked);
+        quitButton.onClick.RemoveListener(OnQuitClicked);
     }
 
     private void Start()
@@ -76,6 +88,26 @@ public class GameController : MonoBehaviour
         model.SetZone(zone);
         wheelView.Build(GetConfigForZone());
         UpdateUI();
+    }
+
+    public void DebugSpinToBomb()
+    {
+        if (wheelView.IsSpinning)
+            return;
+
+        WheelConfig config = GetConfigForZone();
+        for (int i = 0; i < config.Slices.Count; i++)
+        {
+            if (!config.Slices[i].reward.IsBomb)
+                continue;
+
+            spinButton.interactable = false;
+            wheelView.DebugSpinToSlice(i, OnSpinFinished);
+            UpdateUI();
+            return;
+        }
+
+        Debug.LogWarning("The current wheel zone has no bomb slice.", this);
     }
 #endif
 
@@ -111,6 +143,15 @@ public class GameController : MonoBehaviour
         UpdateUI();
     }
 
+    private void OnQuitClicked()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
     private void OnLeaveClicked()
     {
         foreach (KeyValuePair<RewardData, int> reward in model.Rewards)
@@ -125,5 +166,6 @@ public class GameController : MonoBehaviour
     {
         leaveButton.interactable = model.CanLeave && !wheelView.IsSpinning;
         zoneText.text = "Zone " + model.Zone;
+        rewardsView.Show(model.Rewards);
     }
 }
