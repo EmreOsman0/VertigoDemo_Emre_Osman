@@ -15,7 +15,7 @@ A risk-and-reward wheel of fortune game made in **Unity 6 (6000.3.23f1)** for th
 
 | 20:9 | 16:9 | 4:3 |
 | --- | --- | --- |
-| _add_ | _add_ | _add_ |
+| ![20:9](Docs/Screenshots/20x9.png) | ![16:9](Docs/Screenshots/16x9.png) | ![4:3](Docs/Screenshots/4x3.png) |
 
 Gameplay video: _add link_
 
