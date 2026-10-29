@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class WheelView : MonoBehaviour
 {
     [SerializeField] private Image wheelImage;
+    [SerializeField] private Image indicatorImage;
     [SerializeField] private RectTransform sliceContainer;
     [SerializeField] private WheelSliceView slicePrefab;
     [SerializeField] private float radius = 150f; // The radius of the wheel where slices will be positioned
@@ -23,6 +24,7 @@ public class WheelView : MonoBehaviour
     {
         currentConfig = wheelConfig;
         wheelImage.sprite = wheelConfig.WheelSprite;
+        indicatorImage.sprite = wheelConfig.IndicatorSprite;
 
         float step = 360f / wheelConfig.Slices.Count;
 

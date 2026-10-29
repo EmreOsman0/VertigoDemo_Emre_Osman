@@ -5,8 +5,10 @@ using UnityEngine;
 public class WheelConfig : ScriptableObject
 {
     [SerializeField] private Sprite wheelSprite;
+    [SerializeField] private Sprite indicatorSprite;
     [SerializeField] private WheelSlice[] slices;
     public Sprite WheelSprite { get { return wheelSprite; } }
+    public Sprite IndicatorSprite { get { return indicatorSprite; } }
     public IReadOnlyList<WheelSlice> Slices { get { return slices; } }
 
 #if UNITY_EDITOR

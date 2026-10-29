@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private WheelView wheelView;
     [SerializeField] private Button spinButton;
     [SerializeField] private Button leaveButton;
+    [SerializeField] private TextMeshProUGUI zoneText;
     [SerializeField] private WheelConfig bronzeConfig;
     [SerializeField] private WheelConfig silverConfig;
     [SerializeField] private WheelConfig goldenConfig;
@@ -16,13 +18,17 @@ public class GameController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        Transform spinButtonTransform = transform.Find("ui_button_spin");
+        Transform spinButtonTransform = transform.Find("ui_wheel_buttons/ui_button_spin");
         if (spinButtonTransform != null)
             spinButton = spinButtonTransform.GetComponent<Button>();
 
-        Transform leaveButtonTransform = transform.Find("ui_button_leave");
+        Transform leaveButtonTransform = transform.Find("ui_wheel_buttons/ui_button_leave");
         if (leaveButtonTransform != null)
             leaveButton = leaveButtonTransform.GetComponent<Button>();
+
+        Transform zoneTextTransform = transform.Find("ui_text_zone_value");
+        if (zoneTextTransform != null)
+            zoneText = zoneTextTransform.GetComponent<TextMeshProUGUI>();
     }
 #endif
 
@@ -41,7 +47,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         wheelView.Build(GetConfigForZone());
-        UpdateLeaveButton();
+        UpdateUI();
     }
 
     private WheelConfig GetConfigForZone()
@@ -57,7 +63,7 @@ public class GameController : MonoBehaviour
         if (wheelView.IsSpinning) return;
         model.SetZone(zone);
         wheelView.Build(GetConfigForZone());
-        UpdateLeaveButton();
+        UpdateUI();
     }
 #endif
 
@@ -65,7 +71,7 @@ public class GameController : MonoBehaviour
     {
         spinButton.interactable = false;
         wheelView.Spin(OnSpinFinished);
-        UpdateLeaveButton();
+        UpdateUI();
     }
 
     private void OnSpinFinished(WheelSlice slice)
@@ -84,7 +90,7 @@ public class GameController : MonoBehaviour
         }
 
         wheelView.Build(GetConfigForZone());
-        UpdateLeaveButton();
+        UpdateUI();
     }
 
     private void OnLeaveClicked()
@@ -94,11 +100,12 @@ public class GameController : MonoBehaviour
 
         model.Reset();
         wheelView.Build(GetConfigForZone());
-        UpdateLeaveButton();
+        UpdateUI();
     }
 
-    private void UpdateLeaveButton()
+    private void UpdateUI()
     {
         leaveButton.interactable = model.CanLeave && !wheelView.IsSpinning;
+        zoneText.text = "Zone " + model.Zone;
     }
 }
