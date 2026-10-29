@@ -22,11 +22,16 @@ public class WheelConfig : ScriptableObject
         return WheelType.Bronze;
     }
 
-    public bool HasBomb()
+    public int IndexOfBomb()
     {
         for (int i = 0; i < slices.Length; i++)
-            if (slices[i].reward != null && slices[i].reward.IsBomb) return true;
-        return false;
+            if (slices[i].reward != null && slices[i].reward.IsBomb) return i;
+        return -1;
+    }
+
+    public bool HasBomb()
+    {
+        return IndexOfBomb() >= 0;
     }
 
 #if UNITY_EDITOR

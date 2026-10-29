@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26629fdafca6cbf4aad6c675150b5b85, type: 3}
   m_Name: ZoneWheelTable
   m_EditorClassIdentifier: Assembly-CSharp::ZoneWheelTable
+  bronzeWheel: {fileID: 11400000, guid: 19d4f1b29382b636ac25bf568bb9582b, type: 2}
+  silverWheel: {fileID: 11400000, guid: 98847a4fa8b03392cfaa4afc3b953e23, type: 2}
+  goldenWheel: {fileID: 11400000, guid: 7354c79f96afef3f489550c412c22fea, type: 2}
   zoneWheels: []

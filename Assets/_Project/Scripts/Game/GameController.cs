@@ -16,9 +16,6 @@ public class GameController : MonoBehaviour
     [SerializeField] private RewardsView popupRewardsView;
     [SerializeField] private Button playAgainButton;
     [SerializeField] private Button rewardsQuitButton;
-    [SerializeField] private WheelConfig bronzeConfig;
-    [SerializeField] private WheelConfig silverConfig;
-    [SerializeField] private WheelConfig goldenConfig;
     [SerializeField] private ZoneWheelTable zoneWheelTable;
 
     private GameModel model = new GameModel();
@@ -27,49 +24,29 @@ public class GameController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        Transform spinButtonTransform = transform.Find("ui_wheel_buttons/ui_button_spin");
-        if (spinButtonTransform != null)
-            spinButton = spinButtonTransform.GetComponent<Button>();
+        spinButton = FindChild<Button>("ui_wheel_buttons/ui_button_spin");
+        leaveButton = FindChild<Button>("ui_wheel_buttons/ui_button_leave");
+        zoneText = FindChild<TextMeshProUGUI>("ui_text_zone_value");
+        rewardsView = FindChild<RewardsView>("ui_rewards");
+        bombPopup = FindObject("ui_popups/ui_popup_bomb");
+        restartButton = FindChild<Button>("ui_popups/ui_popup_bomb/ui_button_popup_bomb_restart");
+        quitButton = FindChild<Button>("ui_popups/ui_popup_bomb/ui_button_popup_bomb_quit");
+        rewardsPopup = FindObject("ui_popups/ui_popup_reward");
+        popupRewardsView = FindChild<RewardsView>("ui_popups/ui_popup_reward/ui_popup_rewards");
+        playAgainButton = FindChild<Button>("ui_popups/ui_popup_reward/ui_button_popup_rewards_play_again");
+        rewardsQuitButton = FindChild<Button>("ui_popups/ui_popup_reward/ui_button_popup_rewards_quit");
+    }
 
-        Transform leaveButtonTransform = transform.Find("ui_wheel_buttons/ui_button_leave");
-        if (leaveButtonTransform != null)
-            leaveButton = leaveButtonTransform.GetComponent<Button>();
+    private T FindChild<T>(string path) where T : Component
+    {
+        Transform child = transform.Find(path);
+        return child != null ? child.GetComponent<T>() : null;
+    }
 
-        Transform zoneTextTransform = transform.Find("ui_text_zone_value");
-        if (zoneTextTransform != null)
-            zoneText = zoneTextTransform.GetComponent<TextMeshProUGUI>();
-
-        Transform rewardsViewTransform = transform.Find("ui_rewards");
-        if (rewardsViewTransform != null)
-            rewardsView = rewardsViewTransform.GetComponent<RewardsView>();
-
-        Transform bombPopupTransform = transform.Find("ui_popups/ui_popup_bomb");
-        if (bombPopupTransform != null)
-            bombPopup = bombPopupTransform.gameObject;
-
-        Transform restartButtonTransform = transform.Find("ui_popups/ui_popup_bomb/ui_button_popup_bomb_restart");
-        if (restartButtonTransform != null)
-            restartButton = restartButtonTransform.GetComponent<Button>();
-
-        Transform quitButtonTransform = transform.Find("ui_popups/ui_popup_bomb/ui_button_popup_bomb_quit");
-        if (quitButtonTransform != null)
-            quitButton = quitButtonTransform.GetComponent<Button>();
-
-        Transform rewardsPopupTransform = transform.Find("ui_popups/ui_popup_reward");
-        if (rewardsPopupTransform != null)
-            rewardsPopup = rewardsPopupTransform.gameObject;
-
-        Transform popupRewardsViewTransform = transform.Find("ui_popups/ui_popup_reward/ui_popup_rewards_list");
-        if (popupRewardsViewTransform != null)
-            popupRewardsView = popupRewardsViewTransform.GetComponent<RewardsView>();
-
-        Transform playAgainButtonTransform = transform.Find("ui_popups/ui_popup_reward/ui_button_popup_rewards_play_again");
-        if (playAgainButtonTransform != null)
-            playAgainButton = playAgainButtonTransform.GetComponent<Button>();
-
-        Transform rewardsQuitButtonTransform = transform.Find("ui_popups/ui_popup_reward/ui_button_popup_rewards_quit");
-        if (rewardsQuitButtonTransform != null)
-            rewardsQuitButton = rewardsQuitButtonTransform.GetComponent<Button>();
+    private GameObject FindObject(string path)
+    {
+        Transform child = transform.Find(path);
+        return child != null ? child.gameObject : null;
     }
 #endif
 
@@ -101,24 +78,8 @@ public class GameController : MonoBehaviour
 
     private void BuildWheel()
     {
-        WheelConfig wheel = zoneWheelTable.GetWheel(model.Zone);
-        if (wheel != null)
-        {
-            multiplier = 1;
-        }
-        else
-        {
-            wheel = GetConfigForZone();
-            multiplier = model.Zone;
-        }
+        WheelConfig wheel = zoneWheelTable.GetWheel(model.Zone, out multiplier);
         wheelView.Build(wheel, multiplier);
-    }
-
-    private WheelConfig GetConfigForZone()
-    {
-        if (model.IsSuperZone) return goldenConfig;
-        if (model.IsSafeZone) return silverConfig;
-        return bronzeConfig;
     }
 
 #if UNITY_EDITOR
@@ -135,19 +96,16 @@ public class GameController : MonoBehaviour
         if (wheelView.IsSpinning)
             return;
 
-        WheelConfig config = wheelView.CurrentConfig;
-        for (int i = 0; i < config.Slices.Count; i++)
+        int bombIndex = wheelView.CurrentConfig.IndexOfBomb();
+        if (bombIndex < 0)
         {
-            if (!config.Slices[i].reward.IsBomb)
-                continue;
-
-            spinButton.interactable = false;
-            wheelView.DebugSpinToSlice(i, OnSpinFinished);
-            UpdateUI();
+            Debug.LogWarning("The current wheel zone has no bomb slice.", this);
             return;
         }
 
-        Debug.LogWarning("The current wheel zone has no bomb slice.", this);
+        spinButton.interactable = false;
+        wheelView.DebugSpinToSlice(bombIndex, OnSpinFinished);
+        UpdateUI();
     }
 #endif
 
@@ -167,7 +125,6 @@ public class GameController : MonoBehaviour
         }
 
         spinButton.interactable = true;
-        Debug.Log("Won: " + slice.reward.RewardName + " x" + (slice.amount * multiplier) + " | Zone: " + model.Zone);
         model.AddReward(slice, multiplier);
 
         BuildWheel();

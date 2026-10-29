@@ -256,12 +256,9 @@ MonoBehaviour:
   restartButton: {fileID: 544488210}
   quitButton: {fileID: 1788248221}
   rewardsPopup: {fileID: 545954499}
-  popupRewardsView: {fileID: 1614468147}
+  popupRewardsView: {fileID: 0}
   playAgainButton: {fileID: 977698071}
   rewardsQuitButton: {fileID: 1101193213}
-  bronzeConfig: {fileID: 11400000, guid: 19d4f1b29382b636ac25bf568bb9582b, type: 2}
-  silverConfig: {fileID: 11400000, guid: 98847a4fa8b03392cfaa4afc3b953e23, type: 2}
-  goldenConfig: {fileID: 11400000, guid: 7354c79f96afef3f489550c412c22fea, type: 2}
   zoneWheelTable: {fileID: 11400000, guid: 12b7179222fa2944e8d54492b6a34dec, type: 2}
 --- !u!224 &154997358 stripped
 RectTransform:
@@ -1048,6 +1045,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4406645777025654108, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
+      propertyPath: m_Name
+      value: ui_popup_rewards_viewport
+      objectReference: {fileID: 0}
     - target: {fileID: 5727626141074294069, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
       propertyPath: m_ChildAlignment
       value: 3
@@ -1062,7 +1063,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7450864887073371216, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
       propertyPath: m_Name
-      value: ui_rewards
+      value: ui_popup_rewards
+      objectReference: {fileID: 0}
+    - target: {fileID: 7942834984502440702, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
+      propertyPath: m_Name
+      value: ui_popup_rewards_content
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5727626141074294069, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
@@ -2938,17 +2943,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1562645280}
   m_CullTransparentMesh: 1
---- !u!114 &1614468147 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3857671260607975041, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-  m_PrefabInstance: {fileID: 634997374}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e94280c5a89b1854894a5841fbf98d32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RewardsView
 --- !u!1 &1659483613
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,16 +10,32 @@ public class ZoneWheelTable : ScriptableObject
         public WheelConfig wheel;
     }
 
+    [SerializeField] private WheelConfig bronzeWheel;
+    [SerializeField] private WheelConfig silverWheel;
+    [SerializeField] private WheelConfig goldenWheel;
     [SerializeField] private ZoneWheel[] zoneWheels;
 
-    public WheelConfig GetWheel(int zone)
+    public WheelConfig GetWheel(int zone, out int multiplier)
     {
         for (int i = 0; i < zoneWheels.Length; i++)
         {
-            if (zoneWheels[i].zone == zone)
+            if (zoneWheels[i].zone == zone && zoneWheels[i].wheel != null)
+            {
+                multiplier = 1;
                 return zoneWheels[i].wheel;
+            }
         }
-        return null;
+
+        multiplier = zone;
+        return GetDefaultWheel(zone);
+    }
+
+    private WheelConfig GetDefaultWheel(int zone)
+    {
+        WheelConfig.WheelType type = WheelConfig.TypeForZone(zone);
+        if (type == WheelConfig.WheelType.Golden) return goldenWheel;
+        if (type == WheelConfig.WheelType.Silver) return silverWheel;
+        return bronzeWheel;
     }
 
 #if UNITY_EDITOR
