@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class WheelView : MonoBehaviour
     [SerializeField] private int spinRounds = 5;
     [SerializeField] private int maxExtraRounds = 2;
 
+    private readonly List<WheelSliceView> slices = new List<WheelSliceView>();
     private WheelConfig currentConfig;
     private bool isSpinning;
 
@@ -22,22 +24,27 @@ public class WheelView : MonoBehaviour
         currentConfig = wheelConfig;
         wheelImage.sprite = wheelConfig.WheelSprite;
 
-        foreach (Transform child in sliceContainer)
-            Destroy(child.gameObject);
-
         float step = 360f / wheelConfig.Slices.Count;
 
         for (int i = 0; i < wheelConfig.Slices.Count; i++)
         {
+            if (i >= slices.Count)
+                slices.Add(Instantiate(slicePrefab, sliceContainer));
+
+            WheelSliceView slice = slices[i];
+            slice.gameObject.SetActive(true);
+
             float angle = i * step;
             float rad = angle * Mathf.Deg2Rad;
 
-            WheelSliceView slice = Instantiate(slicePrefab, sliceContainer);
             RectTransform rect = (RectTransform)slice.transform;
             rect.anchoredPosition = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * radius;
             rect.localEulerAngles = new Vector3(0, 0, -angle);
             slice.Setup(wheelConfig.Slices[i]);
         }
+
+        for (int i = wheelConfig.Slices.Count; i < slices.Count; i++)
+            slices[i].gameObject.SetActive(false);
     }
 
     public void Spin(System.Action<WheelSlice> onComplete)
