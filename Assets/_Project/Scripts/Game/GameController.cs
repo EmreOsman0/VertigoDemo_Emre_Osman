@@ -166,6 +166,6 @@ public class GameController : MonoBehaviour
     {
         leaveButton.interactable = model.CanLeave && !wheelView.IsSpinning;
         zoneText.text = "Zone " + model.Zone;
-        rewardsView.Show(model.Rewards);
+        rewardsView.Show(model.Rewards, model.CanLeave);
     }
 }

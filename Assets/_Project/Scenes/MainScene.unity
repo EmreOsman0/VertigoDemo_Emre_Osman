@@ -2041,37 +2041,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1466390472}
   m_CullTransparentMesh: 1
---- !u!1 &1489964900 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7942834984502440702, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-  m_PrefabInstance: {fileID: 4118617271745985737}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1489964902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489964900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &1562645280
 GameObject:
   m_ObjectHideFlags: 0
@@ -2445,7 +2414,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1443264991332738273, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 500
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 1443264991332738273, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1443264991332738273, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1443264991332738273, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 1443264991332738273, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2495,45 +2476,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7118092579006680489, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-      propertyPath: m_Color.b
+    - target: {fileID: 1443264991332738273, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7118092579006680489, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7118092579006680489, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-      propertyPath: m_Color.r
+    - target: {fileID: 7133553097904640999, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7450864887073371216, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
       propertyPath: m_Name
       value: ui_rewards
       objectReference: {fileID: 0}
-    - target: {fileID: 8132531339171905276, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 4120212482102018286, guid: 9fbd71789b73b274e9163a8328aa1757, type: 3}
-    - target: {fileID: 8132531339171905276, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8132531339171905276, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8132531339171905276, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7942834984502440702, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1489964902}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89ad642cb9b48f74eaac45b5fb443529, type: 3}
 --- !u!1001 &6715277466140799938
 PrefabInstance:

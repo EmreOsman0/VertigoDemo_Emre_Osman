@@ -5,11 +5,15 @@ public class RewardsView : MonoBehaviour
 {
     [SerializeField] private RectTransform content;
     [SerializeField] private RewardItemView itemPrefab;
+    [SerializeField] private Sprite normalBoxSprite;
+    [SerializeField] private Sprite specialBoxSprite;
 
     private readonly List<RewardItemView> items = new List<RewardItemView>();
 
-    public void Show(IReadOnlyDictionary<RewardData, int> rewards)
+    public void Show(IReadOnlyDictionary<RewardData, int> rewards, bool isSpecialZone)
     {
+        Sprite boxSprite = isSpecialZone ? specialBoxSprite : normalBoxSprite;
+
         int index = 0;
         foreach (KeyValuePair<RewardData, int> reward in rewards)
         {
@@ -17,7 +21,7 @@ public class RewardsView : MonoBehaviour
                 items.Add(Instantiate(itemPrefab, content));
 
             items[index].gameObject.SetActive(true);
-            items[index].Setup(reward.Key, reward.Value);
+            items[index].Setup(reward.Key, reward.Value, boxSprite);
             index++;
         }
 
