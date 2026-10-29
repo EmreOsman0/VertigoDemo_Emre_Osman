@@ -17,7 +17,7 @@ A risk-and-reward wheel of fortune game made in **Unity 6 (6000.3.23f1)** for th
 | --- | --- | --- |
 | ![20:9](Docs/Screenshots/20x9.png) | ![16:9](Docs/Screenshots/16x9.png) | ![4:3](Docs/Screenshots/4x3.png) |
 
-Gameplay video: _add link_
+Gameplay video: [Docs/video.mp4](Docs/video.mp4)
 
 The APK is attached to the latest **GitHub Release**.
 
