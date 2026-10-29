@@ -339,6 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08299effbf5130f4cbe46f6d7dc012e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RewardItemView
+  box: {fileID: 8941528066018193425}
   icon: {fileID: 4891635215903104165}
   amountText: {fileID: 6396091541238644466}
 --- !u!114 &-2382830751358409194
@@ -356,7 +357,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: -1
   m_MinHeight: -1
-  m_PreferredWidth: -1
+  m_PreferredWidth: 85
   m_PreferredHeight: 85
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1

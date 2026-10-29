@@ -8,16 +8,19 @@ public class GameModel
     private int zone = 1;
     private readonly Dictionary<RewardData, int> rewards = new Dictionary<RewardData, int>();
 
+    public static bool IsSuper(int zone) { return zone % SuperZoneInterval == 0; }
+    public static bool IsSafe(int zone) { return !IsSuper(zone) && zone % SafeZoneInterval == 0; }
+
     public int Zone { get { return zone; } }
     public IReadOnlyDictionary<RewardData, int> Rewards { get { return rewards; } }
-    public bool IsSuperZone { get { return zone % SuperZoneInterval == 0; } }
-    public bool IsSafeZone { get { return !IsSuperZone && zone % SafeZoneInterval == 0; } }
+    public bool IsSuperZone { get { return IsSuper(zone); } }
+    public bool IsSafeZone { get { return IsSafe(zone); } }
     public bool CanLeave { get { return IsSafeZone || IsSuperZone; } }
 
-    public void AddReward(WheelSlice slice)
+    public void AddReward(WheelSlice slice, int multiplier)
     {
         rewards.TryGetValue(slice.reward, out int current);
-        rewards[slice.reward] = current + slice.amount;
+        rewards[slice.reward] = current + slice.amount * multiplier;
         zone++;
     }
 

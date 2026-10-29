@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,11 +12,17 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject bombPopup;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private GameObject rewardsPopup;
+    [SerializeField] private RewardsView popupRewardsView;
+    [SerializeField] private Button playAgainButton;
+    [SerializeField] private Button rewardsQuitButton;
     [SerializeField] private WheelConfig bronzeConfig;
     [SerializeField] private WheelConfig silverConfig;
     [SerializeField] private WheelConfig goldenConfig;
+    [SerializeField] private ZoneWheelTable zoneWheelTable;
 
     private GameModel model = new GameModel();
+    private int multiplier = 1;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -49,6 +54,22 @@ public class GameController : MonoBehaviour
         Transform quitButtonTransform = transform.Find("ui_popups/ui_popup_bomb/ui_button_popup_bomb_quit");
         if (quitButtonTransform != null)
             quitButton = quitButtonTransform.GetComponent<Button>();
+
+        Transform rewardsPopupTransform = transform.Find("ui_popups/ui_popup_reward");
+        if (rewardsPopupTransform != null)
+            rewardsPopup = rewardsPopupTransform.gameObject;
+
+        Transform popupRewardsViewTransform = transform.Find("ui_popups/ui_popup_reward/ui_popup_rewards_list");
+        if (popupRewardsViewTransform != null)
+            popupRewardsView = popupRewardsViewTransform.GetComponent<RewardsView>();
+
+        Transform playAgainButtonTransform = transform.Find("ui_popups/ui_popup_reward/ui_button_popup_rewards_play_again");
+        if (playAgainButtonTransform != null)
+            playAgainButton = playAgainButtonTransform.GetComponent<Button>();
+
+        Transform rewardsQuitButtonTransform = transform.Find("ui_popups/ui_popup_reward/ui_button_popup_rewards_quit");
+        if (rewardsQuitButtonTransform != null)
+            rewardsQuitButton = rewardsQuitButtonTransform.GetComponent<Button>();
     }
 #endif
 
@@ -58,6 +79,8 @@ public class GameController : MonoBehaviour
         leaveButton.onClick.AddListener(OnLeaveClicked);
         restartButton.onClick.AddListener(OnRestartClicked);
         quitButton.onClick.AddListener(OnQuitClicked);
+        playAgainButton.onClick.AddListener(OnPlayAgainClicked);
+        rewardsQuitButton.onClick.AddListener(OnQuitClicked);
     }
 
     private void OnDisable()
@@ -66,12 +89,29 @@ public class GameController : MonoBehaviour
         leaveButton.onClick.RemoveListener(OnLeaveClicked);
         restartButton.onClick.RemoveListener(OnRestartClicked);
         quitButton.onClick.RemoveListener(OnQuitClicked);
+        playAgainButton.onClick.RemoveListener(OnPlayAgainClicked);
+        rewardsQuitButton.onClick.RemoveListener(OnQuitClicked);
     }
 
     private void Start()
     {
-        wheelView.Build(GetConfigForZone());
+        BuildWheel();
         UpdateUI();
+    }
+
+    private void BuildWheel()
+    {
+        WheelConfig wheel = zoneWheelTable.GetWheel(model.Zone);
+        if (wheel != null)
+        {
+            multiplier = 1;
+        }
+        else
+        {
+            wheel = GetConfigForZone();
+            multiplier = model.Zone;
+        }
+        wheelView.Build(wheel, multiplier);
     }
 
     private WheelConfig GetConfigForZone()
@@ -86,7 +126,7 @@ public class GameController : MonoBehaviour
     {
         if (wheelView.IsSpinning) return;
         model.SetZone(zone);
-        wheelView.Build(GetConfigForZone());
+        BuildWheel();
         UpdateUI();
     }
 
@@ -95,7 +135,7 @@ public class GameController : MonoBehaviour
         if (wheelView.IsSpinning)
             return;
 
-        WheelConfig config = GetConfigForZone();
+        WheelConfig config = wheelView.CurrentConfig;
         for (int i = 0; i < config.Slices.Count; i++)
         {
             if (!config.Slices[i].reward.IsBomb)
@@ -127,19 +167,30 @@ public class GameController : MonoBehaviour
         }
 
         spinButton.interactable = true;
-        model.AddReward(slice);
-        Debug.Log("Won: " + slice.reward.RewardName + " x" + slice.amount + " | Zone: " + model.Zone);
+        Debug.Log("Won: " + slice.reward.RewardName + " x" + (slice.amount * multiplier) + " | Zone: " + model.Zone);
+        model.AddReward(slice, multiplier);
 
-        wheelView.Build(GetConfigForZone());
+        BuildWheel();
         UpdateUI();
     }
 
     private void OnRestartClicked()
     {
         bombPopup.SetActive(false);
+        StartNewRun();
+    }
+
+    private void OnPlayAgainClicked()
+    {
+        rewardsPopup.SetActive(false);
+        StartNewRun();
+    }
+
+    private void StartNewRun()
+    {
         spinButton.interactable = true;
         model.Reset();
-        wheelView.Build(GetConfigForZone());
+        BuildWheel();
         UpdateUI();
     }
 
@@ -154,12 +205,10 @@ public class GameController : MonoBehaviour
 
     private void OnLeaveClicked()
     {
-        foreach (KeyValuePair<RewardData, int> reward in model.Rewards)
-            Debug.Log("Collected: " + reward.Key.RewardName + " x" + reward.Value);
-
-        model.Reset();
-        wheelView.Build(GetConfigForZone());
-        UpdateUI();
+        spinButton.interactable = false;
+        leaveButton.interactable = false;
+        popupRewardsView.Show(model.Rewards, true);
+        rewardsPopup.SetActive(true);
     }
 
     private void UpdateUI()

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6397e4462a3464eb3820bae231550c, type: 3}
   m_Name: Silver
   m_EditorClassIdentifier: 
+  type: 1
   wheelSprite: {fileID: -4250264824657568362, guid: 6850646e3c553f649bd6a7d26526592a, type: 3}
   indicatorSprite: {fileID: 2528496851094761378, guid: 08f69d024a4558245983f4880410dfc6, type: 3}
   slices:

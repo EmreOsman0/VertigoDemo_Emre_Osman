@@ -19,8 +19,9 @@ public class WheelView : MonoBehaviour
     private bool isSpinning;
 
     public bool IsSpinning { get { return isSpinning; } }
+    public WheelConfig CurrentConfig { get { return currentConfig; } }
 
-    public void Build(WheelConfig wheelConfig)
+    public void Build(WheelConfig wheelConfig, int multiplier)
     {
         currentConfig = wheelConfig;
         wheelImage.sprite = wheelConfig.WheelSprite;
@@ -42,7 +43,7 @@ public class WheelView : MonoBehaviour
             RectTransform rect = (RectTransform)slice.transform;
             rect.anchoredPosition = new Vector2(Mathf.Sin(rad), Mathf.Cos(rad)) * radius;
             rect.localEulerAngles = new Vector3(0, 0, -angle);
-            slice.Setup(wheelConfig.Slices[i]);
+            slice.Setup(wheelConfig.Slices[i], multiplier);
         }
 
         for (int i = wheelConfig.Slices.Count; i < slices.Count; i++)
@@ -84,6 +85,9 @@ public class WheelView : MonoBehaviour
             .OnComplete(delegate
             {
                 isSpinning = false;
+                indicatorImage.rectTransform.DOComplete();
+                indicatorImage.rectTransform.DOPunchRotation(new Vector3(0f, 0f, 15f), 0.4f, 8);
+                slices[index].PlayWinAnimation();
                 onComplete(currentConfig.Slices[index]);
             });
     }

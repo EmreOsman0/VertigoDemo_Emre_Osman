@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6397e4462a3464eb3820bae231550c, type: 3}
   m_Name: Golden
   m_EditorClassIdentifier: 
+  type: 2
   wheelSprite: {fileID: 5770997025872212153, guid: 11df5a93baad92e46b74f91fb47bce37, type: 3}
   indicatorSprite: {fileID: 8294000708589155680, guid: 718ce83ad073f16439ef62580e14e718, type: 3}
   slices:

@@ -153,9 +153,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.44313726}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -213,6 +213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RewardsView
   content: {fileID: 3965190837985424459}
   itemPrefab: {fileID: 3067163962156443123, guid: ce79e6785f2d31a4790a92b8f4757f8d, type: 3}
+  normalBoxSprite: {fileID: 6508470980038672524, guid: f6da673e0793c40488619261e64d3744, type: 3}
+  specialBoxSprite: {fileID: 4465242063869985200, guid: 38b4eefb0eb1a854187bde19cf08e623, type: 3}
 --- !u!1 &7942834984502440702
 GameObject:
   m_ObjectHideFlags: 0
