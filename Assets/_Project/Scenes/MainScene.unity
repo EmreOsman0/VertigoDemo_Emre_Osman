@@ -1034,6 +1034,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3824128446098600355, guid: 8afc42a4ca4985d41afaa45b54eddc9f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7892257743512626691, guid: 8afc42a4ca4985d41afaa45b54eddc9f, type: 3}
       propertyPath: m_SizeDelta.y
       value: 70
@@ -1041,6 +1045,10 @@ PrefabInstance:
     - target: {fileID: 7915396203255765680, guid: 8afc42a4ca4985d41afaa45b54eddc9f, type: 3}
       propertyPath: m_Name
       value: ui_wheel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8906533315369103991, guid: 8afc42a4ca4985d41afaa45b54eddc9f, type: 3}
+      propertyPath: m_UseSpriteMesh
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

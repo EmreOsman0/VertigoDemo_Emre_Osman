@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private WheelView wheelView;
     [SerializeField] private Button spinButton;
+    [SerializeField] private Button leaveButton;
     [SerializeField] private WheelConfig bronzeConfig;
     [SerializeField] private WheelConfig silverConfig;
     [SerializeField] private WheelConfig goldenConfig;
@@ -17,22 +19,29 @@ public class GameController : MonoBehaviour
         Transform spinButtonTransform = transform.Find("ui_button_spin");
         if (spinButtonTransform != null)
             spinButton = spinButtonTransform.GetComponent<Button>();
+
+        Transform leaveButtonTransform = transform.Find("ui_button_leave");
+        if (leaveButtonTransform != null)
+            leaveButton = leaveButtonTransform.GetComponent<Button>();
     }
 #endif
 
     private void OnEnable()
     {
         spinButton.onClick.AddListener(OnSpinClicked);
+        leaveButton.onClick.AddListener(OnLeaveClicked);
     }
 
     private void OnDisable()
     {
         spinButton.onClick.RemoveListener(OnSpinClicked);
+        leaveButton.onClick.RemoveListener(OnLeaveClicked);
     }
 
     private void Start()
     {
         wheelView.Build(GetConfigForZone());
+        UpdateLeaveButton();
     }
 
     private WheelConfig GetConfigForZone()
@@ -48,6 +57,7 @@ public class GameController : MonoBehaviour
         if (wheelView.IsSpinning) return;
         model.SetZone(zone);
         wheelView.Build(GetConfigForZone());
+        UpdateLeaveButton();
     }
 #endif
 
@@ -55,6 +65,7 @@ public class GameController : MonoBehaviour
     {
         spinButton.interactable = false;
         wheelView.Spin(OnSpinFinished);
+        UpdateLeaveButton();
     }
 
     private void OnSpinFinished(WheelSlice slice)
@@ -73,5 +84,21 @@ public class GameController : MonoBehaviour
         }
 
         wheelView.Build(GetConfigForZone());
+        UpdateLeaveButton();
+    }
+
+    private void OnLeaveClicked()
+    {
+        foreach (KeyValuePair<RewardData, int> reward in model.Rewards)
+            Debug.Log("Collected: " + reward.Key.RewardName + " x" + reward.Value);
+
+        model.Reset();
+        wheelView.Build(GetConfigForZone());
+        UpdateLeaveButton();
+    }
+
+    private void UpdateLeaveButton()
+    {
+        leaveButton.interactable = model.CanLeave && !wheelView.IsSpinning;
     }
 }

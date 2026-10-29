@@ -12,6 +12,7 @@ public class GameModel
     public IReadOnlyDictionary<RewardData, int> Rewards { get { return rewards; } }
     public bool IsSuperZone { get { return zone % SuperZoneInterval == 0; } }
     public bool IsSafeZone { get { return !IsSuperZone && zone % SafeZoneInterval == 0; } }
+    public bool CanLeave { get { return IsSafeZone || IsSuperZone; } }
 
     public void AddReward(WheelSlice slice)
     {
