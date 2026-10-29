@@ -171,6 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameController
   wheelView: {fileID: 154997359}
   spinButton: {fileID: 1151372504}
+  bronzeConfig: {fileID: 11400000, guid: 19d4f1b29382b636ac25bf568bb9582b, type: 2}
+  silverConfig: {fileID: 11400000, guid: 98847a4fa8b03392cfaa4afc3b953e23, type: 2}
+  goldenConfig: {fileID: 11400000, guid: 7354c79f96afef3f489550c412c22fea, type: 2}
 --- !u!224 &154997358 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1244361574690665035, guid: 8afc42a4ca4985d41afaa45b54eddc9f, type: 3}
@@ -947,6 +950,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 86624479}
     m_Modifications:
+    - target: {fileID: 127816876091383882, guid: 8afc42a4ca4985d41afaa45b54eddc9f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 179
+      objectReference: {fileID: 0}
     - target: {fileID: 1244361574690665035, guid: 8afc42a4ca4985d41afaa45b54eddc9f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

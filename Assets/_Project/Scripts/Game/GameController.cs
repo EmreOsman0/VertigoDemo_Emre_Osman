@@ -5,6 +5,9 @@ public class GameController : MonoBehaviour
 {
     [SerializeField] private WheelView wheelView;
     [SerializeField] private Button spinButton;
+    [SerializeField] private WheelConfig bronzeConfig;
+    [SerializeField] private WheelConfig silverConfig;
+    [SerializeField] private WheelConfig goldenConfig;
 
     private GameModel model = new GameModel();
 
@@ -27,6 +30,27 @@ public class GameController : MonoBehaviour
         spinButton.onClick.RemoveListener(OnSpinClicked);
     }
 
+    private void Start()
+    {
+        wheelView.Build(GetConfigForZone());
+    }
+
+    private WheelConfig GetConfigForZone()
+    {
+        if (model.IsSuperZone) return goldenConfig;
+        if (model.IsSafeZone) return silverConfig;
+        return bronzeConfig;
+    }
+
+#if UNITY_EDITOR
+    public void DebugSetZone(int zone)
+    {
+        if (wheelView.IsSpinning) return;
+        model.SetZone(zone);
+        wheelView.Build(GetConfigForZone());
+    }
+#endif
+
     private void OnSpinClicked()
     {
         spinButton.interactable = false;
@@ -41,10 +65,13 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Bomb! Lost everything.");
             model.Reset();
-            return;
+        }
+        else
+        {
+            model.AddReward(slice);
+            Debug.Log("Won: " + slice.reward.RewardName + " x" + slice.amount + " | Zone: " + model.Zone);
         }
 
-        model.AddReward(slice);
-        Debug.Log("Won: " + slice.reward.RewardName + " x" + slice.amount + " | Zone: " + model.Zone);
+        wheelView.Build(GetConfigForZone());
     }
 }

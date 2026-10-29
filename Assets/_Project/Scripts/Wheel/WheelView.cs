@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class WheelView : MonoBehaviour
 {
-    [SerializeField] private WheelConfig config;
     [SerializeField] private Image wheelImage;
     [SerializeField] private RectTransform sliceContainer;
     [SerializeField] private WheelSliceView slicePrefab;
@@ -17,11 +16,6 @@ public class WheelView : MonoBehaviour
     private bool isSpinning;
 
     public bool IsSpinning { get { return isSpinning; } }
-
-    private void Start()
-    {
-        Build(config);
-    }
 
     public void Build(WheelConfig wheelConfig)
     {

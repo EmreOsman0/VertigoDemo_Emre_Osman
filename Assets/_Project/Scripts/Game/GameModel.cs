@@ -25,4 +25,12 @@ public class GameModel
         zone = 1;
         rewards.Clear();
     }
+
+#if UNITY_EDITOR
+    public void SetZone(int value)
+    {
+        if (value < 1) value = 1;
+        zone = value;
+    }
+#endif
 }
