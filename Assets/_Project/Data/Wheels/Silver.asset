@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Silver
   m_EditorClassIdentifier: 
   wheelSprite: {fileID: -4250264824657568362, guid: 6850646e3c553f649bd6a7d26526592a, type: 3}
+  indicatorSprite: {fileID: 2528496851094761378, guid: 08f69d024a4558245983f4880410dfc6, type: 3}
   slices:
   - label: Slice 1
     reward: {fileID: 11400000, guid: c2baba5c79bf2584dbe8d742f91d90a4, type: 2}

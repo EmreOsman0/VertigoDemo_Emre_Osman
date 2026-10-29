@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Bronze
   m_EditorClassIdentifier: 
   wheelSprite: {fileID: -7416167051008218582, guid: cf082cf7a7ad8514b9a3d0f142801dd4, type: 3}
+  indicatorSprite: {fileID: 5759410588988491854, guid: e8ea4b17e68220a48be52ec7212e8984, type: 3}
   slices:
   - label: Slice 1
     reward: {fileID: 11400000, guid: 21c6729b6ae34c54ea3a1a2825842254, type: 2}
