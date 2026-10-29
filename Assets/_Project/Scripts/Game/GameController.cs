@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private Button spinButton;
     [SerializeField] private Button leaveButton;
     [SerializeField] private TextMeshProUGUI zoneText;
+    [SerializeField] private GameObject bombPopup;
+    [SerializeField] private Button restartButton;
     [SerializeField] private WheelConfig bronzeConfig;
     [SerializeField] private WheelConfig silverConfig;
     [SerializeField] private WheelConfig goldenConfig;
@@ -29,6 +31,14 @@ public class GameController : MonoBehaviour
         Transform zoneTextTransform = transform.Find("ui_text_zone_value");
         if (zoneTextTransform != null)
             zoneText = zoneTextTransform.GetComponent<TextMeshProUGUI>();
+
+        Transform bombPopupTransform = transform.Find("ui_popups/ui_popup_bomb");
+        if (bombPopupTransform != null)
+            bombPopup = bombPopupTransform.gameObject;
+
+        Transform restartButtonTransform = transform.Find("ui_popups/ui_popup_bomb/ui_button_popup_bomb_restart");
+        if (restartButtonTransform != null)
+            restartButton = restartButtonTransform.GetComponent<Button>();
     }
 #endif
 
@@ -36,12 +46,14 @@ public class GameController : MonoBehaviour
     {
         spinButton.onClick.AddListener(OnSpinClicked);
         leaveButton.onClick.AddListener(OnLeaveClicked);
+        restartButton.onClick.AddListener(OnRestartClicked);
     }
 
     private void OnDisable()
     {
         spinButton.onClick.RemoveListener(OnSpinClicked);
         leaveButton.onClick.RemoveListener(OnLeaveClicked);
+        restartButton.onClick.RemoveListener(OnRestartClicked);
     }
 
     private void Start()
@@ -76,19 +88,25 @@ public class GameController : MonoBehaviour
 
     private void OnSpinFinished(WheelSlice slice)
     {
-        spinButton.interactable = true;
-
         if (slice.reward.IsBomb)
         {
-            Debug.Log("Bomb! Lost everything.");
-            model.Reset();
-        }
-        else
-        {
-            model.AddReward(slice);
-            Debug.Log("Won: " + slice.reward.RewardName + " x" + slice.amount + " | Zone: " + model.Zone);
+            bombPopup.SetActive(true);
+            return;
         }
 
+        spinButton.interactable = true;
+        model.AddReward(slice);
+        Debug.Log("Won: " + slice.reward.RewardName + " x" + slice.amount + " | Zone: " + model.Zone);
+
+        wheelView.Build(GetConfigForZone());
+        UpdateUI();
+    }
+
+    private void OnRestartClicked()
+    {
+        bombPopup.SetActive(false);
+        spinButton.interactable = true;
+        model.Reset();
         wheelView.Build(GetConfigForZone());
         UpdateUI();
     }
